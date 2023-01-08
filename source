@@ -5386,7 +5386,7 @@ end)
 local textChannels = game:GetService("TextChatService"):WaitForChild("TextChannels")
 for i,v in next, textChannels:GetChildren() do
     if v:IsA("TextChannel") then
-		v.MessageReceived:Connect(function()
+		v.MessageReceived:Connect(function(msg)
 			if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
 				local message = lastEnteredString
 				lastEnteredString = nil
@@ -5398,7 +5398,7 @@ end
 
 textChannels.ChildAdded:Connect(function(v)
 	if v:IsA("TextChannel") then
-		v.MessageReceived:Connect(function()
+		v.MessageReceived:Connect(function(msg)
 			if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
 				local message = lastEnteredString
 				lastEnteredString = nil
