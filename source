@@ -5383,30 +5383,32 @@ Players.LocalPlayer.Chatted:Connect(function()
 	end
 end)
 
-local textChannels = game:GetService("TextChatService"):WaitForChild("TextChannels")
-for i,v in next, textChannels:GetChildren() do
-    if v:IsA("TextChannel") then
-		v.MessageReceived:Connect(function(msg)
-			if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
-				local message = lastEnteredString
-				lastEnteredString = nil
-				do_exec(message, Players.LocalPlayer)
-			end
-		end)
+local textChannels = game:GetService("TextChatService"):FindFirstChild("TextChannels")
+if textChannels then
+	for i,v in next, textChannels:GetChildren() do
+		if v:IsA("TextChannel") then
+			v.MessageReceived:Connect(function(msg)
+				if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
+					local message = lastEnteredString
+					lastEnteredString = nil
+					do_exec(message, Players.LocalPlayer)
+				end
+			end)
+		end
 	end
-end
 
-textChannels.ChildAdded:Connect(function(v)
-	if v:IsA("TextChannel") then
-		v.MessageReceived:Connect(function(msg)
-			if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
-				local message = lastEnteredString
-				lastEnteredString = nil
-				do_exec(message, Players.LocalPlayer)
-			end
-		end)
-	end
-end)
+	textChannels.ChildAdded:Connect(function(v)
+		if v:IsA("TextChannel") then
+			v.MessageReceived:Connect(function(msg)
+				if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
+					local message = lastEnteredString
+					lastEnteredString = nil
+					do_exec(message, Players.LocalPlayer)
+				end
+			end)
+		end
+	end)
+end
 
 Cmdbar.PlaceholderText = "Command Bar ("..prefix..")"
 Cmdbar:GetPropertyChangedSignal("Text"):Connect(function()
