@@ -5388,10 +5388,8 @@ if textChannels then
 	for i,v in next, textChannels:GetChildren() do
 		if v:IsA("TextChannel") then
 			v.MessageReceived:Connect(function(msg)
-				if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
-					local message = lastEnteredString
-					lastEnteredString = nil
-					do_exec(message, Players.LocalPlayer)
+				if msg.TextSource.UserId == Players.LocalPlayer.UserId then
+					do_exec(msg.Text, Players.LocalPlayer)
 				end
 			end)
 		end
@@ -5400,10 +5398,8 @@ if textChannels then
 	textChannels.ChildAdded:Connect(function(v)
 		if v:IsA("TextChannel") then
 			v.MessageReceived:Connect(function(msg)
-				if lastEnteredString and msg.TextSource.UserId == Players.LocalPlayer.UserId then
-					local message = lastEnteredString
-					lastEnteredString = nil
-					do_exec(message, Players.LocalPlayer)
+				if msg.TextSource.UserId == Players.LocalPlayer.UserId then
+					do_exec(msg.Text, Players.LocalPlayer)
 				end
 			end)
 		end
